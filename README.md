@@ -17,7 +17,7 @@ git git-lfs docker
 
 Clone git repository:
 ```
-git clone --recursive https://github.com/DDLBots/vicos-oelinux
+git clone --recurse-submodules https://github.com/kercre123/vicos-oelinux-nosign
 ```
 
 Configure Docker so it can be run by a normal user (it is not recommended to run the build script as root):
