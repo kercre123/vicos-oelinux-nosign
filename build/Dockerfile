@@ -1,4 +1,8 @@
 FROM ubuntu:16.04
+
+ARG UID
+ARG GID
+
 RUN apt-get update && apt-get install -y sudo software-properties-common
 RUN apt-get install -y \
     build-essential chrpath cpio debianutils diffstat file gawk gcc git iputils-ping libacl1 liblz4-tool locales python3 python3-git python3-jinja2 python3-pexpect python3-subunit socat texinfo unzip wget xz-utils zstd
@@ -24,8 +28,8 @@ RUN wget https://github.com/git-lfs/git-lfs/releases/download/v3.6.1/git-lfs-lin
 RUN tar -zxf git-lfs-linux-amd64-v3.6.1.tar.gz
 RUN cd git-lfs-3.6.1 && ./install.sh && cd ..
 
-RUN wget https://go.dev/dl/go1.24.0.linux-amd64.tar.gz
-RUN tar -zxf go1.24.0.linux-amd64.tar.gz
+RUN wget https://go.dev/dl/go1.24.1.linux-amd64.tar.gz
+RUN tar -zxf go1.24.1.linux-amd64.tar.gz
 RUN mv go /usr/local/
 
 # later versions require later glibc :(
@@ -41,6 +45,7 @@ RUN update-alternatives --install /usr/bin/ninja ninja /usr/local/bin/ninja 1 --
 
 RUN ln -sf /bin/bash /bin/sh
 RUN useradd -ms /bin/bash build && echo "build ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+RUN usermod -u ${UID} build && groupmod -g ${GID} build
 USER build
 WORKDIR /home/build
 CMD ["/bin/bash"]

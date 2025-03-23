@@ -95,7 +95,7 @@ fi
 
 #&& bitbake -c clean victor && bitbake -c cleansstate victor
 
-docker build -t victor-builder build/
+docker build --build-arg UID=$(id -u $USER) --build-arg GID=$(id -g $USER) -t victor-builder build/
 docker run -it \
     -v "$(pwd):/home/build/vicos-oelinux" \
     -v "$(pwd)/anki-deps:/home/build/.anki" \
