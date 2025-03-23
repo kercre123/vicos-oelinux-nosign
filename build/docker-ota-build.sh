@@ -12,8 +12,8 @@ if [[ ! -d anki/anki-ble ]]; then
 fi
 
 function usage() {
-    echo "Usage: ./build/docker-ota-build.sh <prod/oskr/dev> <incremental> <ota_key_password> <prod/oskr boot image signing password>"
-    echo "example: ./build/docker-ota-build.sh prod 6079 <password> <password>"
+    echo "Usage: ./build/docker-ota-build.sh <oskr/dev> <incremental> <oskr boot image signing password>"
+    echo "example: ./build/docker-ota-build.sh dev 6079 <password> <password>"
     exit 0
 }
 
@@ -29,18 +29,13 @@ if [[ ! $2 =~ ^-?[0000-9999]+$ ]]; then
     usage
 fi
 
-if [[ $3 == "" ]]; then
-    usage
-fi
-
-if [[ $4 == "" && $1 != "dev" ]]; then
+if [[ $3 == "" && $1 != "dev" ]]; then
     usage
 fi
 
 PRODorOSKR=$1
 INCREMENT=$2
-OTA_SIGNING_PASSWORD=$3
-BOOT_SIGNING_PASSWORD=$4
+BOOT_SIGNING_PASSWORD=$3
 
 if [[ ! -d build/cache/ccache ]]; then
     mkdir -p build/cache/ccache
@@ -96,15 +91,6 @@ else
     check_sign_oskr
     OTA_NAME=vicos-$(cat ANKI_VERSION).${INCREMENT}oskr.ota
     PERForUSER="-perf"
-fi
-
-if openssl rsa -in ota/ota_prod.key -passin pass:"$OTA_SIGNING_PASSWORD" -noout 2>/dev/null; then
-    echo "OTA signing key password is confirmed to be correct!"
-else
-    echo
-    echo -e "\033[1;31mOTA signing key is incorrect. exiting.\033[0m"
-    echo
-    exit 1
 fi
 
 #&& bitbake -c clean victor && bitbake -c cleansstate victor

@@ -106,14 +106,13 @@ PERMS="0400"
 OWNER="root:0"
 GROUP="root:0"
 
-$(OTA_FILE): $(MANIFEST).sha256 $(BOOT_GZ_ENC) $(SYS_GZ_ENC)
+$(OTA_FILE): $(BOOT_GZ_ENC) $(SYS_GZ_ENC)
 	$(TAR) --transform='flags=r;s|.enc||' -cf $@ \
 	--mode=$(PERMS) \
 	--owner=$(OWNER) \
 	--group=$(GROUP) \
 	-C $(BUILD) \
 	manifest.ini \
-	manifest.sha256 \
 	apq8009-robot-boot.img.gz.enc \
 	apq8009-robot-sysfs.img.gz.enc
 

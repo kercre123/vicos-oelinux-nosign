@@ -32,8 +32,7 @@ sudo chmod 660 /var/run/docker.sock
 Start Build:
 ```
 cd vicos-oelinux
-./build/docker-ota-build.sh <prod/oskr/dev> <increment> <OTA password> <prod/oskr boot image password>
-# see Zack for passwords
+./build/docker-ota-build.sh <oskr/dev> <increment> <oskr boot image password>
 # boot image password not necessary for dev
 ```
 
