@@ -1,0 +1,116 @@
+#!/bin/bash
+export LTTNG_HOME="/data/ankitrace"
+export LTTNG_URL="$LTTNG_HOME/trace"
+export TRACE_ACTIVE="$LTTNG_HOME/active"
+export TRACE_CAPTURE="$LTTNG_HOME/capture"
+export LTTNG="/usr/bin/lttng"
+
+function trace_start {
+    /bin/mkdir -p $LTTNG_HOME
+    /bin/mkdir -p $LTTNG_URL
+    /sbin/modprobe lttng-tracer
+    $LTTNG create --snapshot --set-url=$LTTNG_URL
+    $LTTNG enable-channel -k --subbuf-size=512k --num-subbuf=2 channel0
+    $LTTNG enable-channel -u --subbuf-size=128K --num-subbuf=2 channel0
+    $LTTNG enable-event -u anki_ust* -c channel0
+    $LTTNG enable-event -u lttng_ust_tracelog* -c channel0
+    $LTTNG enable-event -k -a --syscall  -c channel0
+    $LTTNG enable-event -k sched_switch -c channel0
+    $LTTNG enable-event -k power_cpu_frequency -c channel0
+    $LTTNG enable-event -k irq_handler_entry -c channel0
+    $LTTNG enable-event -k irq_softirq_raise -c channel0
+    $LTTNG enable-event -k asoc_snd* -c channel0
+    $LTTNG enable-event -k compaction* -c channel0
+    $LTTNG enable-event -k writeback* -c channel0
+    $LTTNG enable-event -k workqueue* -c channel0
+    $LTTNG enable-event -k mm_vmscan* -c channel0
+    $LTTNG enable-event -k lttng_logger -c channel0
+    $LTTNG start
+    /bin/touch $TRACE_ACTIVE
+}
+
+function trace_quit {
+    if [ -f $TRACE_ACTIVE ]; then
+      $LTTNG stop
+      $LTTNG destroy -a
+      /bin/rm -f $TRACE_ACTIVE
+    else
+        echo "Invalid Action: Tracing not active"
+        exit 1
+    fi
+}
+
+function trace_record {
+    if [ ! -f $TRACE_CAPTURE ]; then
+      /bin/touch $TRACE_CAPTURE
+      $LTTNG stop
+      $LTTNG snapshot record --name=ankitrace
+      $LTTNG start
+    fi
+}
+
+function trace_clear {
+    /bin/rm -rf $LTTNG_URL
+    /bin/rm -f $TRACE_CAPTURE
+    /bin/mkdir -p $LTTNG_URL
+}
+
+function trace_tar {
+    TRACE_PATH=$1
+    if [ -f $TRACE_ACTIVE ]; then
+      trace_record
+      /bin/mkdir -p $TRACE_PATH
+      /bin/mv $LTTNG_URL/ankitrace* $TRACE_PATH/
+      trace_clear
+    else
+        echo "Invalid Action: Tracing not active"
+        exit 1
+    fi
+}
+
+while getopts "hsqcrz:" opt; do
+    case ${opt} in
+        h)
+            echo "Usage:"
+            echo "    ankitrace -h           Display help message."
+            echo "    ankitrace -s           Start trace daemon."
+            echo "    ankitrace -q           Quit trace daemon."
+            echo "    ankitrace -r           Record trace to memory"
+            echo "    ankitrace -c           Clear trace record"
+            echo "    ankitrace -z <PATH>    Archive to PATH and clear capture."
+            exit 0
+            ;;
+        s)
+            trace_start
+            exit 0
+            ;;
+        q)
+            trace_quit
+            exit 0
+            ;;
+        c)
+            trace_clear
+            exit 0
+            ;;
+        r)
+            trace_record
+            exit 0
+            ;;
+        z)
+            trace_tar ${OPTARG}
+            exit 0
+            ;;
+        \?)
+            echo "Invalid Option: -$OPTARG"
+            exit 1
+            ;;
+        esac
+    done
+
+
+case "$subcommand" in
+    \?)
+        echo "Invalid Command: -$subcommand" 1>$2
+        exit 1
+        ;;
+esac

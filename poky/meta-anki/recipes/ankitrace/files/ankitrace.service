@@ -1,0 +1,11 @@
+[Unit]
+SourcePath=/usr/bin/ankitrace
+Description=Anki tracing Service
+After=ankiinit.service
+Before=vic-init.service
+
+[Service]
+Type=forking
+PIDFile=/run/lttng/lttng-sessiond.pid
+ExecStart=/usr/bin/ankitrace -s
+ExecStop=/usr/bin/ankitrace -q

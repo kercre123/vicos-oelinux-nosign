@@ -1,0 +1,3 @@
+export BB_ENV_EXTRAWHITE="$BB_ENV_EXTRAWHITE ANKI_BUILD_VERSION"
+
+echo Set anki build version to $ANKI_BUILD_VERSION ...
