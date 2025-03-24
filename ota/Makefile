@@ -106,7 +106,7 @@ PERMS="0400"
 OWNER="root:0"
 GROUP="root:0"
 
-$(OTA_FILE): $(BOOT_GZ_ENC) $(SYS_GZ_ENC)
+$(OTA_FILE): $(MANIFEST).ini $(BOOT_GZ_ENC) $(SYS_GZ_ENC)
 	$(TAR) --transform='flags=r;s|.enc||' -cf $@ \
 	--mode=$(PERMS) \
 	--owner=$(OWNER) \
