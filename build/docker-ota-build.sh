@@ -43,6 +43,7 @@ if [[ ! -d build/cache/ccache ]]; then
     tar -xzf build/viccyware-oelinux-ccache.tar.gz
     echo "Extracting ccache"
     rm viccyware-oelinux-ccache.tar.gz
+    cd ..
 fi
 
 function check_sign_prod() {
