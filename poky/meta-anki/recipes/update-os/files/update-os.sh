@@ -40,7 +40,7 @@ if [ $# -gt 0 ]; then
 	    usage
 	    ;;
 	latest)
-	    URL="${BASE_URL}full/latest.ota"
+	    URL="${BASE_URL}raw/dev/latest.ota"
 	    ;;
         delta-latest)
             URL="${BASE_URL_LATEST}diff/`getprop ro.anki.version | tr -d '[a-z]'`.ota"
