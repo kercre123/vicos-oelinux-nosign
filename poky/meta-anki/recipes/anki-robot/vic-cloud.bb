@@ -20,10 +20,6 @@ do_install_append () {
 FILES_${PN} += "${systemd_unitdir}/system/"
 SYSTEMD_SERVICE_${PN} = "${SERVICE_FILE}"
 
-do_compile() {
-    docker build -t armbuilder ${S}/vector-cloud/docker-builder/.
-}
-
 GOPATH = "${WORKDIR}/go_path"
 GOEXEPATH = "${WORKDIR}/go_exe"
 
