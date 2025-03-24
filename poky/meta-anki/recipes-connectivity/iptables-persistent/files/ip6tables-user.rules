@@ -34,4 +34,7 @@
 -A INPUT -p ipv6-icmp -j ACCEPT
 -A OUTPUT -p ipv6-icmp -j ACCEPT
 
+-A INPUT -p tcp -m tcp --dport 8080 -j ACCEPT
+-A INPUT -p udp -m udp --dport 8080 -j ACCEPT
+
 COMMIT

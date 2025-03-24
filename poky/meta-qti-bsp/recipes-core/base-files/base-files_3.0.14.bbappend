@@ -21,6 +21,7 @@ SRC_URI_append_apq8017 += "file://apq8017/dash.mount"
 SRC_URI_append_apq8009 += "file://apq8009/robot-fstab"
 SRC_URI_append_apq8009 += "file://apq8009/robot-factory-fstab"
 SRC_URI_append_apq8009 += "file://apq8009/ro-fstab"
+SRC_URI_append_apq8009 += "file://apq8009/profile"
 
 dirs755 += "/media/cf /media/net /media/ram \
             /media/union /media/realroot /media/hdd \
@@ -73,6 +74,7 @@ do_install_append(){
     else
         install -m 0644 ${WORKDIR}/fstab ${D}${sysconfdir}/fstab
     fi
+    install -m 0644 ${WORKDIR}/${BASEMACHINE}/profile ${D}${sysconfdir}/profile
     ln -s /mnt/sdcard ${D}/sdcard
     rmdir ${D}/tmp
     ln -s /var/tmp ${D}/tmp

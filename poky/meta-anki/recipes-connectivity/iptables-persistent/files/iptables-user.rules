@@ -31,4 +31,7 @@
 # Allow ping
 -A INPUT -p icmp -m icmp --icmp-type 8 -m conntrack --ctstate NEW -j ACCEPT
 
+-A INPUT -p tcp -m tcp --dport 8080 -j ACCEPT
+-A INPUT -p udp -m udp --dport 8080 -j ACCEPT
+
 COMMIT

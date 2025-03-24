@@ -16,7 +16,6 @@ wired: go_deps
 	CGO_ENABLED=1 GOARM=7 GOARCH=arm CC=/home/build/.anki/vicos-sdk/dist/1.1.0-r04/prebuilt/bin/arm-oe-linux-gnueabi-clang \
 	CXX=/home/build/.anki/vicos-sdk/dist/1.1.0-r04/prebuilt/bin/arm-oe-linux-gnueabi-clang++ \
 	 /usr/local/go/bin/go build -tags vicos -ldflags '-w -s' -o build/wired main.go
-
 	upx build/wired
 
 
