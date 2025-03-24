@@ -40,8 +40,8 @@ BOOT_SIGNING_PASSWORD=$3
 if [[ ! -d build/cache/ccache ]]; then
     cd build/
     wget http://modder.my.to:81/viccyware-oelinux-ccache.tar.gz
-    tar -xzf build/viccyware-oelinux-ccache.tar.gz
     echo "Extracting ccache"
+    tar -xzf build/viccyware-oelinux-ccache.tar.gz
     rm viccyware-oelinux-ccache.tar.gz
     cd ..
 fi
