@@ -123,7 +123,7 @@ $(OTA_FILE): $(MANIFEST).ini $(BOOT_GZ_ENC) $(SYS_GZ_ENC)
 	apq8009-robot-sysfs.img.gz.enc
 
 $(OTA_FILE)-sign: $(MANIFEST).sha256 $(BOOT_GZ_ENC) $(SYS_GZ_ENC)
-	$(TAR) --transform='flags=r;s|.enc||' -cf $@ \
+	$(TAR) --transform='flags=r;s|.enc||' -cf $(patsubst %-sign,%, $@) \
 	--mode=$(PERMS) \
 	--owner=$(OWNER) \
 	--group=$(GROUP) \

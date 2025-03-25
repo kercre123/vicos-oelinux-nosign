@@ -5,3 +5,6 @@
 [submodule "anki/vector-cloud"]
 	path = anki/vector-cloud
 	url = https://github.com/DDLBots/vector-cloud-fork
+[submodule "anki/wired/vector-gobot"]
+	path = anki/wired/vector-gobot
+	url = https://github.com/kercre123/vector-gobot
