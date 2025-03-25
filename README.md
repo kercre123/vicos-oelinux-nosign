@@ -1,12 +1,12 @@
-# vicos-oelinux
+# viccyware-oelinux
 
 This repository contains the embedded OS that runs on victor hardware.
-If you are looking for victor embedded firmware, robotics, animation and engine layers checkout [victor-dev](https://github.com/DDLBots/victor-dev).
-`vicos-oelinux` *is* the repo you are looking for if you want to create a full OTA. It includes stuff like victor-dev as submodules.
+If you are looking for Viccyware embedded firmware, robotics, animation and engine layers checkout [Viccyware](https://github.com/Switch-modder/Viccyware).
+`vicos-oelinux` *is* the repo you are looking for if you want to create a full OTA. It includes stuff like Viccyware as submodules.
 
 ## Build Instructions
 
-This will build an OTA from scratch. (yes, it *actually* will. including `victor` and `vector-cloud`. wire approved in the year of 2025)
+This will build an OTA from scratch. (yes, it *actually* will. including `Viccyware` and `vector-cloud`. wire approved in the year of 2025)
 
 You need a beefy x86_64 Linux machine with a lot of available storage and Docker installed.
 
@@ -17,7 +17,7 @@ git git-lfs docker
 
 Clone git repository:
 ```
-git clone --recurse-submodules https://github.com/kercre123/vicos-oelinux-nosign
+git clone --recursive https://github.com/Switch-modder/viccyware-oelinux
 ```
 
 Configure Docker so it can be run by a normal user (it is not recommended to run the build script as root):
@@ -31,7 +31,7 @@ sudo chmod 660 /var/run/docker.sock
 
 Start Build:
 ```
-cd vicos-oelinux
+cd viccyware-oelinux
 ./build/docker-ota-build.sh <oskr/dev> <increment> <oskr boot image password>
 # boot image password not necessary for dev
 ```
@@ -40,10 +40,10 @@ cd vicos-oelinux
 
 Example:
 ```
-./build/docker-ota-build.sh prod 6080 <OTA password> <prod boot image password>
+./build/docker-ota-build.sh oskr 6080 <oskr boot image password>
 ```
 
-This will create an OTA called vicos-2.0.1.6080.ota in vicos-oelinux/_build/ which will run on prod bots.
+This will create an OTA called vicos-2.0.1.6080oskr.ota in viccyware-oelinux/_build/ which will run on oskr bots.
 This is scriptable - it will not prompt for anything.
 
 ### Suffix key:
@@ -57,11 +57,11 @@ This is scriptable - it will not prompt for anything.
 
 
 ```
-cd ~/vicos-oelinux
+cd ~/viccyware-oelinux
 git pull --recurse-submodules
-./build/docker-ota-build.sh prod <increment> <OTA password> <prod/oskr boot image password>
-./build/docker-ota-build.sh oskr <increment> <OTA password> <prod/oskr boot image password>
-./build/docker-ota-build.sh dev <increment> <OTA password> <prod/oskr boot image password>
+./build/docker-ota-build.sh prod <increment> <OTA password> <prod boot image password>
+./build/docker-ota-build.sh oskr <increment> <oskr boot image password>
+./build/docker-ota-build.sh dev <increment>
 scp _build/vicos-2.0.1.<increment>.ota <destination>
 scp _build/vicos-2.0.1.<increment>d.ota <destination>
 scp _build/vicos-2.0.1.<increment>oskr.ota <destination>
@@ -107,12 +107,6 @@ Factory builds are intended as the out of box / recovery firmware programmed int
 The primary difference for factory builds is that `/data` is always mounted as a tmpfs in factory builds so it is
 erased every power cycles meaning the robot does not remember wifi configuration etc.
 
-
--------------------------------------------------------------------------------
-
-## Making Unlock OTA files
-
-See [vector-oskr-unlock](https://github.com/DDLBots/vector-oskr-unlock)
 
 -------------------------------------------------------------------------------
 
