@@ -1,8 +1,8 @@
 # vicos-oelinux
 
 This repository contains the embedded OS that runs on victor hardware.
-If you are looking for victor embedded firmware, robotics, animation and engine layers checkout [victor-dev](https://github.com/DDLBots/victor-dev).
-`vicos-oelinux` *is* the repo you are looking for if you want to create a full OTA. It includes stuff like victor-dev as submodules.
+If you are looking for victor embedded firmware, robotics, animation and engine layers checkout [victor](https://github.com/kercre123/victor).
+`vicos-oelinux` *is* the repo you are looking for if you want to create a full OTA. It includes stuff like victor as submodules.
 
 ## Build Instructions
 
@@ -17,7 +17,7 @@ git git-lfs docker
 
 Clone git repository:
 ```
-git clone --recurse-submodules https://github.com/kercre123/vicos-oelinux-nosign
+git clone --recurse-submodules --shallow-submodules https://github.com/kercre123/vicos-oelinux-nosign --depth=1
 ```
 
 Configure Docker so it can be run by a normal user (it is not recommended to run the build script as root):
@@ -107,12 +107,6 @@ Factory builds are intended as the out of box / recovery firmware programmed int
 The primary difference for factory builds is that `/data` is always mounted as a tmpfs in factory builds so it is
 erased every power cycles meaning the robot does not remember wifi configuration etc.
 
-
--------------------------------------------------------------------------------
-
-## Making Unlock OTA files
-
-See [vector-oskr-unlock](https://github.com/DDLBots/vector-oskr-unlock)
 
 -------------------------------------------------------------------------------
 
