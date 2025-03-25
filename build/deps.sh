@@ -31,12 +31,12 @@ mkdir -p anki-deps/wwise/versions/2017.2.7_a
 
 cd anki-deps/vicos-sdk/dist/1.1.0-r04
 wget ${VICOS_SDK_LINK}
-tar -zxvf vicos-sdk-1.1.0-r04-x86_64-ubuntu-16.04.tar.gz
+tar -zxf vicos-sdk-1.1.0-r04-x86_64-ubuntu-16.04.tar.gz
 rm vicos-sdk-1.1.0-r04-x86_64-ubuntu-16.04.tar.gz
 
 cd ../../../wwise/versions/2017.2.7_a
 wget ${WWISE_LINK}
-tar -zxvf wwise-2017.2.7_a.tar.gz
+tar -zxf wwise-2017.2.7_a.tar.gz
 rm wwise-2017.2.7_a.tar.gz
 
 cd ../../../../
