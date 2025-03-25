@@ -74,7 +74,8 @@ gen_buildprop() {
      echo "ro.build.display.id=${OS_VERSION}" >> ${IMAGE_ROOTFS}/build.prop
    else
      # For Dev builds, display victor + OS versions
-     echo "ro.build.display.id=${VERSION_ID}" >> ${IMAGE_ROOTFS}/build.prop
+     # Wire: my victor includes the sha in a new CCIS screen, not necessary to include here anymore
+     echo "ro.build.display.id=${OS_VERSION}" >> ${IMAGE_ROOTFS}/build.prop
    fi
 
    # build.type is intended for apps to know what build type they are running on
